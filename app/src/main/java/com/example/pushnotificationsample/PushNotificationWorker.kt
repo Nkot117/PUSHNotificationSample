@@ -13,14 +13,13 @@ class PushNotificationWorker(context: Context, params: WorkerParameters) : Worke
     override fun doWork(): Result {
         val channelId = "push_notification_channel"
         val notificationId = 1
-
         val notificationManager: NotificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Build.VERSION.SDK_INT > O) {
+        if (Build.VERSION.SDK_INT >= O) {
             val name = "Push Notification Channel"
             val descriptionText = "This is the push notification channel"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(channelId, name, importance).also {
                 it.description = descriptionText
             }
