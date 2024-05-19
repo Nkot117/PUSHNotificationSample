@@ -8,8 +8,8 @@ import androidx.core.app.NotificationCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class NotificationSender @Inject constructor(@ApplicationContext private val context: Context) {
-    fun sendPushNotification() {
+open class NotificationSender @Inject constructor(@ApplicationContext private val context: Context) {
+   open fun sendPushNotification() {
         val channelId = "push_notification_channel"
         val notificationId = 1
         val notificationManager: NotificationManager =
