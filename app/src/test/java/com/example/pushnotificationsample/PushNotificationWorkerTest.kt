@@ -13,26 +13,34 @@ import org.junit.runner.RunWith
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import org.assertj.core.api.Assertions.*
+import org.junit.Rule
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnit
+import org.mockito.junit.MockitoRule
 import org.mockito.kotlin.doNothing
-import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import org.mockito.quality.Strictness
 
 @RunWith(AndroidJUnit4::class)
 class PushNotificationWorkerTest {
+    @get:Rule
+    val rule: MockitoRule = MockitoJUnit.rule().strictness(Strictness.WARN)
+
+    // PushNotificationWorkerが依存しているNotificationSenderのモックを作成
+    @Mock
+    private lateinit var notificationSender: NotificationSender
+
     private lateinit var context: Context
     private lateinit var executor: Executor
-    private lateinit var notificationSender: NotificationSender
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
         executor = Executors.newSingleThreadExecutor()
 
-        // PushNotificationWorkerが依存しているNotificationSenderのモックを作成
         // sendPushNotification()メソッドが呼び出されたときに何もしないように設定
-        notificationSender = mock(name = "MockNotificationSender")
         doNothing().whenever(notificationSender).sendPushNotification()
     }
 
