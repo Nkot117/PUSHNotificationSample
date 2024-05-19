@@ -66,7 +66,6 @@ class TestWorkerFactory(private val notificationSender: NotificationSender) : Wo
         workerClassName: String,
         workerParameters: WorkerParameters
     ): ListenableWorker {
-
         return PushNotificationWorker(appContext, workerParameters, notificationSender)
     }
 }
